@@ -1,0 +1,30 @@
+{
+  "name": "@mhanzelka/api-client",
+  "version": "0.1.0",
+  "description": "Tiny typed fetch-based API client (factory, structured errors, namespaces)",
+  "type": "module",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "package.json", "README.md"],
+  "sideEffects": false,
+  "scripts": {
+    "build": "vite build",
+    "typecheck": "tsc --noEmit"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vite": "^7.1.11",
+    "vite-plugin-dts": "^4.2.3"
+  }
+}
