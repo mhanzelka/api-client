@@ -13,7 +13,11 @@ export const buildUrl = (
     path: string,
     query?: QueryParams
 ): string => {
-    const url = new URL(path, baseUrl)
+    // normalize so a base with a path prefix (e.g. …/api/v1) is preserved:
+    // ensure base ends with "/" and strip a leading "/" from path before resolving.
+    const normalizedBase = baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
+    const normalizedPath = path.startsWith('/') ? path.slice(1) : path;
+    const url = new URL(normalizedPath, normalizedBase)
     if (query) {
         Object.entries(query).forEach(([key, value]) => {
             if (value === undefined || value === null) return;
