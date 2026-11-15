@@ -19,7 +19,9 @@ const withBasePath = (api: Api, base: string): Api => {
     }, {} as Methods)
     return {
         ...api,
-        ...methods
+        ...methods,
+        // postForm takes the form as its second argument, so it cannot share the loop above
+        postForm: (path, formData, options) => api.postForm(joinPath(base, path), formData, options),
     }
 }
 

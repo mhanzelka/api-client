@@ -6,6 +6,8 @@ export interface RequestErrorParams<TBody = unknown> {
     body?: TBody | null;
     path?: string;
     details?: unknown;
+    headers?: Headers;
+    retryAfterMs?: number;
 }
 
 export const isRequestErrorFormat = (obj: unknown): obj is RequestErrorParams  => {
@@ -34,6 +36,8 @@ export const isRequestError = (obj: unknown): obj is RequestError => {
  * @param params.body - An optional response body associated with the error.
  * @param params.path - An optional request path that caused the error.
  * @param params.details - Optional additional details about the error.
+ * @param params.headers - The response headers, when the server answered.
+ * @param params.retryAfterMs - The server's `Retry-After` as a delay in milliseconds, when it sent one.
  * @template TBody - The type of the response body associated with the error.
  */
 export class RequestError<TBody = unknown> extends Error {
@@ -43,6 +47,8 @@ export class RequestError<TBody = unknown> extends Error {
     body: TBody | null;
     path?: string;
     details?: unknown;
+    headers?: Headers;
+    retryAfterMs?: number;
 
     constructor(params: RequestErrorParams<TBody>) {
         super(params.message);
@@ -53,6 +59,8 @@ export class RequestError<TBody = unknown> extends Error {
         this.body = params.body ?? null;
         this.path = params.path;
         this.details = params.details;
+        this.headers = params.headers;
+        this.retryAfterMs = params.retryAfterMs;
     }
 
     toString() {
